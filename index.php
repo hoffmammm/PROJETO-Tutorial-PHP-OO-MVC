@@ -45,12 +45,11 @@ h2 {
                     Alertas::success('Cadastro excluído com sucesso');
                     break;
                     case 3:
-                        default;
-                            Alertas::success('Cadastro atualizado com sucesso');
-                            break;
-                                default;
-                                    Alertas::danger('Nenhuma ação realizada');
-                                    break;
+                         Alertas::success('Cadastro atualizado com sucesso');
+                         break;
+                            default:
+                                Alertas::danger('Nenhuma ação realizada');
+                                break;
         }
     }
     
