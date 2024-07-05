@@ -27,9 +27,10 @@ h2 {
 </style>
 <body>
 <div class="container">
-    <h2 class="py-5 text-center">Novo Usuário </h2>
-    <form method="POST" action="../controller/insert_client.php"> 
+    <h2 class="py-5 text-center">Atualizar Usuário </h2>
+    <form method="POST" action="../controller/update_client.php"> 
     <div class="row g-3">
+     <?php foreach ($manager->list_client_by_id($id) as $data) :?>
      <div class="col-md-6">
          <label for="name" class="form-label">Nome <i class="bi bi-person"></i> </label>
          <input type="text" class="form-control" name="name" required autofocus>
@@ -59,13 +60,15 @@ h2 {
          <label for="address" class="form-label">Endereço <i class="bi bi-map"></i> </label>
          <input type="text" class="form-control" name="address" required autofocus>
      </div>
-
+     <input type="hidden" name="id" value="<?= $data['address'] ?>">
+    <?php endforeach;?>
      <hr class="my-4">
 
      <div class="col-md-12 text-end">
-        <button class="btn btn-primary btn-lg" type="submit">Cadastrar</button>
+        <button class="btn btn-primary btn-lg" type="submit">Atualizar</button>
         <a class="btn btn-success btn-lg" href="../index.php">Cancelar</a>
      </div>
+
     </div>
     </form>
 </div>

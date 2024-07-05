@@ -1,5 +1,13 @@
+<?php
+
+    include 'model/Conexao.class.php';
+    include 'model/Manager.class.php';
+    include 'utilities/Alerts.class.php';
+
+    $manager = new Manager();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +35,26 @@ h2 {
 </style>
 <body>
 <div class="container">
+<?php
+    if(isset($_GET['cod'])){
+        switch($_GET['cod']){
+            case 1:
+                Alertas::success('Cadastro confirmado com sucesso');
+                break;
+                case 2:
+                    Alertas::success('Cadastro excluído com sucesso');
+                    break;
+                    case 3:
+                        default;
+                            Alertas::success('Cadastro atualizado com sucesso');
+                            break;
+                                default:
+                                    Alertas::danger('Nenhuma ação realizada');
+                                    break;
+        }
+    }
+    
+?>
     <h2 class="text-center"> Lista de Usuários <i class="bi bi-people-fill"></i> </h2>
     <h5 class="text-end"> 
         <a href="view/page_register.php" class="btn btn-primary btn-xs"> 
@@ -49,29 +77,32 @@ h2 {
         </tr>
     </thead>
     <tbody>
+        <?php foreach ($manager->list_client() as $data):?>
         <tr>
-            <td>1</td>
-            <td>Maria Fernanda</td>
-            <td>mariafernanda@gmail.com</td>
-            <td>333.444.555-33</td>
-            <td>11/10/2003</td>
-            <td>Av. Santos da Silva, 101</td>
-            <td>(31) 2232-33232</td>
+            <td><?= $data['id'] ?></td>
+            <td><?= $data['name'] ?></td>
+            <td><?= $data['email'] ?></td>
+            <td><?= $data['cpf'] ?></td>
+            <td><?= $data['birth'] ?></td>
+            <td><?= $data['address'] ?></td>
+            <td><?= $data['phone'] ?></td>
             <td>
-             <form method="POST">
+             <form action="view/page_update.php" method="post">
+                <input type="hidden" name="id" value=<?= $data['id']?>>
                 <button class="btn btn-warning btn-xs">
                  <i class="bi bi-pencil-square"></i>
                 </button>
              </form>
             </td>
             <td>
-             <form method="POST" onclick="return confirm ('Tem certeza que deseja excluir?');">
+             <form method="post" action="controller/delete_client.php" onclick="return confirm ('Tem certeza que deseja excluir?');">
                 <button class="btn btn-danger btn-xs">
                  <i class="bi bi-trash"></i>
                 </button>
              </form>
             </td>
         </tr>
+        <?php endforeach;?>
     </tbody>
 </table>
 </div>
